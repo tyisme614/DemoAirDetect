@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class IndexFragment extends Fragment {
 
@@ -30,7 +33,8 @@ public class IndexFragment extends Fragment {
 	private int mCurrentIndex;
 	//widgets
 	private ProgressCircleView pcv_index;
-	private TextView tv_state;
+	private HorizontalScrollView hsv_tips;
+//	private TextView tv_state;
 	private boolean started = false;
 	private int curr_state;
 	private Thread update;
@@ -55,7 +59,28 @@ public class IndexFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.fragment_index, container, false);
 		pcv_index = (ProgressCircleView) rootView.findViewById(R.id.pcv_index);
-		tv_state = (TextView) rootView.findViewById(R.id.tv_state);
+		hsv_tips = (HorizontalScrollView) rootView.findViewById(R.id.hsv_tips);
+		
+		//for demo purpose
+		LayoutInflater li = this.getActivity().getLayoutInflater();
+		LinearLayout ll_container = new LinearLayout(this.getActivity());
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+		ll_container.setOrientation(LinearLayout.HORIZONTAL);
+		ll_container.setLayoutParams(params);
+		
+		View v1 = li.inflate(R.layout.gallery_item_smallpic, null);		
+		TextView msg = (TextView) v1.findViewById(R.id.tv_msg);
+		msg.setText(this.getActivity().getString(R.string.tip_msg));
+		View v2 = li.inflate(R.layout.gallery_item_pic,null);
+		View v3 = li.inflate(R.layout.gallery_item_smallpic, null);				
+		View v4 = li.inflate(R.layout.gallery_item_pic,null);
+		ll_container.addView(v1);
+		ll_container.addView(v2);
+		ll_container.addView(v3);
+		ll_container.addView(v4);
+		hsv_tips.addView(ll_container);
+		
+//		tv_state = (TextView) rootView.findViewById(R.id.tv_state);
 		
 		return rootView;
 	}
@@ -70,8 +95,8 @@ public class IndexFragment extends Fragment {
 		pcv_index.clearFocus();
 		pcv_index.destroyDrawingCache();
 		
-		tv_state.setText("Excellent!");
-		tv_state.setTextColor(getResources().getColor(R.color.green));
+//		tv_state.setText("Excellent!");
+//		tv_state.setTextColor(getResources().getColor(R.color.green));
 		curr_state = STATE_EXCELLENT;
 		pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green));
 		mCurrentIndex = (int) (Math.random()*100.0);
@@ -103,23 +128,23 @@ public class IndexFragment extends Fragment {
 			super.handleMessage(msg);
 			switch( msg.arg1 ){
 			case STATE_EXCELLENT:
-				tv_state.setText("Excellent!");
-				tv_state.setTextColor(getResources().getColor(R.color.green));
+//				tv_state.setText("Excellent!");
+//				tv_state.setTextColor(getResources().getColor(R.color.green));
 				pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green));
 				break;
 			case STATE_NORMAL:
-				tv_state.setText("Normal");
-				tv_state.setTextColor(getResources().getColor(R.color.limegreen));
+//				tv_state.setText("Normal");
+//				tv_state.setTextColor(getResources().getColor(R.color.limegreen));
 				pcv_index.setColor(getResources().getColor(R.color.limegreen), getResources().getColor(R.color.limegreen));
 				break;
 			case STATE_BAD:
-			tv_state.setText("Bad");
-			tv_state.setTextColor(getResources().getColor(R.color.orange));
+//			tv_state.setText("Bad");
+//			tv_state.setTextColor(getResources().getColor(R.color.orange));
 			pcv_index.setColor(getResources().getColor(R.color.orange), getResources().getColor(R.color.orange));
 			break;
 			case STATE_DANGER:
-				tv_state.setText("Danger!!!");
-				tv_state.setTextColor(getResources().getColor(R.color.red));
+//				tv_state.setText("Danger!!!");
+//				tv_state.setTextColor(getResources().getColor(R.color.red));
 				pcv_index.setColor(getResources().getColor(R.color.red), getResources().getColor(R.color.red));
 				break;
 			}

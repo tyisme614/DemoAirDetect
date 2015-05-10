@@ -27,7 +27,13 @@ public class MainActivity extends Activity
 	//constants
 	private static final int FRAGMENT_INDEX = 0;
 	private static final int FRAGMENT_STATISTICS = 1;
-	private static final int FRAGMENT_OTHER = 2;
+	private static final int FRAGMENT_PROFILE = 2;
+	public static final String EXTRA_DEVICE_NAME = "extra.device_name";
+	public static final String EXTRA_DEVICE_ID = "extra.device_id";
+	public static final String EXTRA_DEVICE_IP = "extra.device_ip";
+	public static final String EXTRA_DEVICE_TCPPORT = "extra.device_tcpport";
+	public static final String EXTRA_DEVICE_UDPPORT = "extra.device_udpport";
+//	private static final int FRAGMENT_OTHER = 2;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -65,9 +71,12 @@ public class MainActivity extends Activity
     	case FRAGMENT_STATISTICS:
     		target = StatisticsFragment.getInstance();
     		break;
-    	case FRAGMENT_OTHER:
-    		target = OtherFragment.getInstance();
+    	case FRAGMENT_PROFILE:
+    		target = ProfileFragment.getInstance();
     		break;
+//    	case FRAGMENT_OTHER:
+//    		target = OtherFragment.getInstance();
+//    		break;
     	}
     	FragmentManager fragmentManager = getFragmentManager();
 //        

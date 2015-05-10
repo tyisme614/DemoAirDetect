@@ -3,6 +3,7 @@ package org.demo.airdetect.models;
 public class Sensor {
 	private String uuid;
 	private String type;
+
 	
 	public Sensor( String uuid, String type){
 		this.uuid = uuid;
@@ -24,6 +25,9 @@ public class Sensor {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+
+	
 	
 	
 }

@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
-			Intent i = new Intent( SplashActivity.this, MainActivity.class);
+			Intent i = new Intent( SplashActivity.this, DeviceListActivity.class);
 			startActivity(i);
 			finish();
 		}

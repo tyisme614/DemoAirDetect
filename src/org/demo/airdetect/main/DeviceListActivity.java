@@ -5,10 +5,16 @@ import java.util.List;
 
 import org.demo.airdetect.models.HCHCDevice;
 
+import com.dexafree.materialList.cards.SimpleCard;
+import com.dexafree.materialList.cards.SmallImageCard;
+import com.dexafree.materialList.model.CardItemView;
+import com.dexafree.materialList.view.MaterialListView;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +34,8 @@ public class DeviceListActivity extends Activity {
 	private static final String LOG_TAG = "DeviceListActivity";
 	
 	//widgets
-	private ListView lv_devices;
+//	private ListView lv_devices;
+	private MaterialListView lv_devices;
 	//local members
 	private BaseAdapter mAdapter;
 	//demo data
@@ -78,40 +85,66 @@ public class DeviceListActivity extends Activity {
 	 * local methods
 	 */
 	private void initWidgets(){
-		lv_devices = (ListView) findViewById(R.id.lv_devices);
+		lv_devices = (MaterialListView) findViewById(R.id.lv_devices);
 		//for demo purpose
-
 		HCHCDevice d1 = new HCHCDevice("客厅的检测仪", "123456574", "192.168.1.101", 12314, 3233);
 		HCHCDevice d2 = new HCHCDevice("卧室的检测仪", "1234574", "192.168.1.102", 12314, 3233);
-		List<HCHCDevice> list = new ArrayList<HCHCDevice>();
-		list.add(d1);
-		list.add(d2);
-		mAdapter = new DeviceAdapter(list);
-		lv_devices.setAdapter(mAdapter);
-		lv_devices.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				//demo data
-//				String deviceName =  (String) mAdapter.getItem(position);
-//				String deviceID = "123456789";
-//				String IP = "192.168.1.123";
-//				int TCPPort = 1234;
-//				int UDPPort = 5678;
-
-				Intent i = new Intent(DeviceListActivity.this, MainActivity.class);
-//				i.putExtra(MainActivity.EXTRA_DEVICE_NAME, deviceName);
-//				i.putExtra(MainActivity.EXTRA_DEVICE_ID, deviceID);
-//				i.putExtra(MainActivity.EXTRA_DEVICE_IP, IP);
-//				i.putExtra(MainActivity.EXTRA_DEVICE_TCPPORT, TCPPort);
-//				i.putExtra(MainActivity.EXTRA_DEVICE_UDPPORT, UDPPort);
-				startActivity(i);
-//				finish();
-			}
+		SimpleCard card1 = new SmallImageCard(this);
+		card1.setTitle(d1.getName());
+		card1.setDescription("IP地址：" + d1.getIP());
+		card1.setDrawable(R.drawable.icon_device);		
 		
+		SimpleCard card2 = new SmallImageCard(this);
+		card2.setTitle(d2.getName());
+		card2.setDescription("IP地址：" + d2.getIP());
+		card2.setDrawable(R.drawable.icon_device);	
+		lv_devices.add(card1);		
+		lv_devices.add(card2);
+		
+//		List<HCHCDevice> list = new ArrayList<HCHCDevice>();
+//		list.add(d1);
+//		list.add(d2);
+//		mAdapter = new DeviceAdapter(list);
+//		lv_devices.setAdapter(mAdapter);
+		lv_devices.addOnItemTouchListener(new com.dexafree.materialList.controller.RecyclerItemClickListener.OnItemClickListener() {
+			
+			@Override
+			public void onItemLongClick(CardItemView view, int position) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onItemClick(CardItemView view, int position) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(DeviceListActivity.this, MainActivity.class);
+				startActivity(i);
+			}
 		});
+//		lv_devices.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				// TODO Auto-generated method stub
+//				//demo data
+////				String deviceName =  (String) mAdapter.getItem(position);
+////				String deviceID = "123456789";
+////				String IP = "192.168.1.123";
+////				int TCPPort = 1234;
+////				int UDPPort = 5678;
+//
+//				
+////				i.putExtra(MainActivity.EXTRA_DEVICE_NAME, deviceName);
+////				i.putExtra(MainActivity.EXTRA_DEVICE_ID, deviceID);
+////				i.putExtra(MainActivity.EXTRA_DEVICE_IP, IP);
+////				i.putExtra(MainActivity.EXTRA_DEVICE_TCPPORT, TCPPort);
+////				i.putExtra(MainActivity.EXTRA_DEVICE_UDPPORT, UDPPort);
+//				
+////				finish();
+//			}
+//		
+//		});
 		
 	}
 	

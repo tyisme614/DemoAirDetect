@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class IndexFragment extends Fragment {
 	//widgets
 	private ProgressCircleView pcv_index;
 	private HorizontalScrollView hsv_tips;
-//	private TextView tv_state;
+	private TextView tv_state;
 	private boolean started = false;
 	private int curr_state;
 	private Thread update;
@@ -66,7 +67,9 @@ public class IndexFragment extends Fragment {
 		LinearLayout ll_container = new LinearLayout(this.getActivity());
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
 		ll_container.setOrientation(LinearLayout.HORIZONTAL);
+		
 		ll_container.setLayoutParams(params);
+		ll_container.setGravity(Gravity.CENTER);
 		
 		View v1 = li.inflate(R.layout.gallery_item_smallpic, null);		
 		TextView msg = (TextView) v1.findViewById(R.id.tv_msg);
@@ -80,7 +83,7 @@ public class IndexFragment extends Fragment {
 		ll_container.addView(v4);
 		hsv_tips.addView(ll_container);
 		
-//		tv_state = (TextView) rootView.findViewById(R.id.tv_state);
+		tv_state = (TextView) rootView.findViewById(R.id.tv_state);
 		
 		return rootView;
 	}
@@ -95,10 +98,10 @@ public class IndexFragment extends Fragment {
 		pcv_index.clearFocus();
 		pcv_index.destroyDrawingCache();
 		
-//		tv_state.setText("Excellent!");
-//		tv_state.setTextColor(getResources().getColor(R.color.green));
+		tv_state.setText("优");
+		tv_state.setTextColor(getResources().getColor(R.color.green));
 		curr_state = STATE_EXCELLENT;
-		pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green));
+		pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green), getResources().getColor(R.color.green));
 		mCurrentIndex = (int) (Math.random()*100.0);
 		if(update != null ){
 			started = false;
@@ -128,24 +131,24 @@ public class IndexFragment extends Fragment {
 			super.handleMessage(msg);
 			switch( msg.arg1 ){
 			case STATE_EXCELLENT:
-//				tv_state.setText("Excellent!");
-//				tv_state.setTextColor(getResources().getColor(R.color.green));
-				pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green));
+				tv_state.setText("优");
+				tv_state.setTextColor(getResources().getColor(R.color.green));
+				pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green),getResources().getColor(R.color.green));
 				break;
 			case STATE_NORMAL:
-//				tv_state.setText("Normal");
-//				tv_state.setTextColor(getResources().getColor(R.color.limegreen));
-				pcv_index.setColor(getResources().getColor(R.color.limegreen), getResources().getColor(R.color.limegreen));
+				tv_state.setText("良");
+				tv_state.setTextColor(getResources().getColor(R.color.limegreen));
+				pcv_index.setColor(getResources().getColor(R.color.limegreen), getResources().getColor(R.color.limegreen), getResources().getColor(R.color.limegreen));
 				break;
 			case STATE_BAD:
-//			tv_state.setText("Bad");
-//			tv_state.setTextColor(getResources().getColor(R.color.orange));
-			pcv_index.setColor(getResources().getColor(R.color.orange), getResources().getColor(R.color.orange));
+				tv_state.setText("差");
+			tv_state.setTextColor(getResources().getColor(R.color.orange));
+			pcv_index.setColor(getResources().getColor(R.color.orange), getResources().getColor(R.color.orange), getResources().getColor(R.color.orange));
 			break;
 			case STATE_DANGER:
-//				tv_state.setText("Danger!!!");
-//				tv_state.setTextColor(getResources().getColor(R.color.red));
-				pcv_index.setColor(getResources().getColor(R.color.red), getResources().getColor(R.color.red));
+				tv_state.setText("极差");
+				tv_state.setTextColor(getResources().getColor(R.color.red));
+				pcv_index.setColor(getResources().getColor(R.color.red), getResources().getColor(R.color.red), getResources().getColor(R.color.red));
 				break;
 			}
 //			pcv_index.setProgress(msg.arg2);

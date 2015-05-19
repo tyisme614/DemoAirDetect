@@ -10,7 +10,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerInParent="true"
-        wheel:matProg_barColor="#FFFFFF"  
+        wheel:matProg_barColor="@android:color/holo_green_dark"  
         wheel:matProg_circleRadius="80dp"     
         wheel:matProg_progressIndeterminate="true" />
     <ImageView 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pw_search"
         android:layout_marginTop="50dp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/secondary_text_dark"
         android:textSize="16sp"/>
 
 </RelativeLayout>

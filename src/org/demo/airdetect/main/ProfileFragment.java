@@ -26,7 +26,7 @@ public class ProfileFragment extends Fragment {
 		//local members
 		private BaseAdapter mAdapter;
 		//demo data
-		private String[] devices = new String[]{"模拟设备001"};
+		private String[] devices = new String[]{"客厅的检测仪","卧室的检测仪"};
 		public static ProfileFragment getInstance(){
 			if(singleton == null){
 				singleton = new ProfileFragment();

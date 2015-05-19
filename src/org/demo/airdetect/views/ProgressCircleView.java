@@ -112,9 +112,10 @@ public class ProgressCircleView extends View {
 		postInvalidate();
 	}
 	
-	public void setColor(int circle, int ring){
+	public void setColor(int circle, int ring, int text){
 //		mCirclePaint.setColor(circle);
 		mRingPaint.setColor(ring);
+		mTextPaint.setColor(text);
 	}
 
 }

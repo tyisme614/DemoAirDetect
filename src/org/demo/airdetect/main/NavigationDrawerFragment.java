@@ -1,14 +1,22 @@
 package org.demo.airdetect.main;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.github.mikephil.charting.charts.BarChart;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -19,7 +27,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -97,15 +108,32 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+//                getActionBar().getThemedContext(),
+//                android.R.layout.simple_list_item_activated_1,
+//                android.R.id.text1,
+//                new String[]{
+//                        getString(R.string.title_section1),
+//                        getString(R.string.title_section2),
+//                        getString(R.string.title_section3),
+//                }));
+        
+        Drawable d_index = getResources().getDrawable(R.drawable.icon_index);
+        Drawable d_trend = getResources().getDrawable(R.drawable.icon_trend);
+        Drawable d_info =   getResources().getDrawable(R.drawable.icon_info);
+        String str_index = getString(R.string.title_section1);
+        String str_trend = getString(R.string.title_section2);
+        String str_info = getString(R.string.title_section3);
+        Map<String, Drawable> src = new HashMap<String, Drawable>();
+        src.put(str_index, d_index);
+        src.put(str_trend, d_trend);
+        src.put(str_info, d_info);
+        List<String> texts = new ArrayList<String>();
+        texts.add(str_index);
+        texts.add(str_trend);
+        texts.add(str_info);
+        mDrawerListView.setAdapter(new DrawerAdapter(getActivity(), src, texts));
+        
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -272,5 +300,65 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+    
+    class DrawerAdapter extends BaseAdapter{
+
+    	private Map<String, Drawable> sources;
+    	private List<String> items;
+    	private Context mContext;
+    	public DrawerAdapter(Context ctx, Map<String, Drawable> map, List<String> tx){
+    		this.sources = map;
+    		items = tx;
+    		mContext = ctx;
+    	}
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return sources.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			String text = items.get(position);
+			Drawable icon  = sources.get(text);
+			ViewHolder holder = null;
+			 if (convertView == null) {
+
+	                holder = new ViewHolder();
+	                convertView = LayoutInflater.from(mContext).inflate(
+	                        R.layout.list_item_drawer, null);               	
+					
+					holder.tv_item = (TextView) convertView.findViewById(R.id.tv_item);	
+					holder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+	                convertView.setTag(holder);
+
+	            } else {
+	                holder = (ViewHolder) convertView.getTag();
+	            }
+			 holder.tv_item.setText(text);
+			 holder.iv_icon.setImageDrawable(icon);
+			 
+			return convertView;
+		}
+		
+		class ViewHolder{
+			public TextView tv_item;
+			public ImageView iv_icon;
+		}
+    	
     }
 }

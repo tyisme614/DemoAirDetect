@@ -58,7 +58,7 @@ public class StatisticsFragment extends Fragment {
 	private List<LineData> list_day;
 	private List<LineData> list_week;
 	private List<LineData> list_month;
-	
+	private View rootView;
 	public static StatisticsFragment getInstance(){
 		if(singleton == null ){
 			singleton = new StatisticsFragment();
@@ -76,77 +76,80 @@ public class StatisticsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
-		btn_day = (Button) rootView.findViewById(R.id.btn_day);
-		btn_week = (Button) rootView.findViewById(R.id.btn_week);
-		btn_month = (Button) rootView.findViewById(R.id.btn_month);
-//		bc_statistics = (BarChart) rootView.findViewById(R.id.bc_statistics);
-		mListView = (ListView) rootView.findViewById(R.id.lv_charts);
+		if(rootView == null){
+			rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
+			btn_day = (Button) rootView.findViewById(R.id.btn_day);
+			btn_week = (Button) rootView.findViewById(R.id.btn_week);
+			btn_month = (Button) rootView.findViewById(R.id.btn_month);
+//			bc_statistics = (BarChart) rootView.findViewById(R.id.bc_statistics);
+			mListView = (ListView) rootView.findViewById(R.id.lv_charts);
+			
+			
+			btn_day.setOnClickListener(btnListener);
+			btn_week.setOnClickListener(btnListener);
+			btn_month.setOnClickListener(btnListener);
+			
+			btn_day.setBackgroundColor(Color.rgb(217, 80, 138));
+			btn_day.setTextColor(getResources().getColor(R.color.white));
+			btn_week.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
+			btn_week.setBackgroundResource(R.color.transparent);
+			btn_month.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
+			btn_month.setBackgroundResource(R.color.transparent);
+			//demo
+//			BarData d1 = generateData("5月1日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
+//			BarData d2 = generateData("5月2日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
+//			BarData d3 = generateData("5月3日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
+//			BarData d4 = generateData("5月4日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
+//			BarData d5 = generateData("5月5日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));Color.rgb(192, 255, 140), Color.rgb(255, 247, 140)
+			LineData d1 = generateDataLine("5月1日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
+			LineData d2 = generateDataLine("5月2日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(255, 247, 140));
+			LineData d3 = generateDataLine("5月3日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
+			LineData d4 = generateDataLine("5月4日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(255, 247, 140));
+			LineData d5 = generateDataLine("5月5日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
+			
+//			list_day  = new ArrayList<BarData>();
+			list_day = new ArrayList<LineData>();
+			list_day.add(d5);
+			list_day.add(d4);
+			list_day.add(d3);
+			list_day.add(d2);
+			list_day.add(d1);
+			
+//			BarData w1 = generateData("5月第1周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
+//			BarData w2 = generateData("5月第2周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
+//			BarData w3 = generateData("5月第3周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
+//			list_week = new ArrayList<BarData>();
+			LineData w1 = generateDataLine("5月第1周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(192, 255, 140));
+			LineData w2 = generateDataLine("5月第2周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(255, 247, 140));
+			LineData w3 = generateDataLine("5月第3周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(192, 255, 140));
+			list_week = new ArrayList<LineData>();
+			list_week.add(w3);
+			list_week.add(w2);
+			list_week.add(w1);
+			
+//			BarData m1 = generateData("2015年5月", 31, 100, getXLabels(XAXIS_LABEL_TYPE_MONTH));
+//			list_month = new ArrayList<BarData>();
+//			list_month.add(m1);
+			LineData m1 = generateDataLine("2015年5月", 31, 100, getXLabels(XAXIS_LABEL_TYPE_MONTH), Color.rgb(192, 255, 140));
+			list_month = new ArrayList<LineData>();
+			list_month.add(m1);
+//			mAdapter = new ChartListAdapter(StatisticsFragment.this.getActivity().getApplicationContext(), list_day);
+			mAdapter = new LineChartListAdapter(StatisticsFragment.this.getActivity().getApplicationContext(), list_day);
+			mListView.setAdapter(mAdapter);
+			
+//			generateDemoData();
+//		     XAxis xAxis = bc_statistics.getXAxis();
+//	         xAxis.setPosition(XAxisPosition.BOTTOM);
+//	         xAxis.setDrawGridLines(false);
+//	         
+//	         
+//	         YAxis leftAxis = bc_statistics.getAxisLeft();
+//	         leftAxis.setLabelCount(5);
+//	         leftAxis.setSpaceTop(15f);
+//	         data = generateData("Data of Day", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
+	// //        bc_statistics.setData(data);
+		}
 		
-		
-		btn_day.setOnClickListener(btnListener);
-		btn_week.setOnClickListener(btnListener);
-		btn_month.setOnClickListener(btnListener);
-		
-		btn_day.setBackgroundColor(Color.rgb(217, 80, 138));
-		btn_day.setTextColor(getResources().getColor(R.color.white));
-		btn_week.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
-		btn_week.setBackgroundResource(R.color.transparent);
-		btn_month.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
-		btn_month.setBackgroundResource(R.color.transparent);
-		//demo
-//		BarData d1 = generateData("5月1日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
-//		BarData d2 = generateData("5月2日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
-//		BarData d3 = generateData("5月3日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
-//		BarData d4 = generateData("5月4日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
-//		BarData d5 = generateData("5月5日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));Color.rgb(192, 255, 140), Color.rgb(255, 247, 140)
-		LineData d1 = generateDataLine("5月1日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
-		LineData d2 = generateDataLine("5月2日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(255, 247, 140));
-		LineData d3 = generateDataLine("5月3日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
-		LineData d4 = generateDataLine("5月4日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(255, 247, 140));
-		LineData d5 = generateDataLine("5月5日", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY), Color.rgb(192, 255, 140));
-		
-//		list_day  = new ArrayList<BarData>();
-		list_day = new ArrayList<LineData>();
-		list_day.add(d5);
-		list_day.add(d4);
-		list_day.add(d3);
-		list_day.add(d2);
-		list_day.add(d1);
-		
-//		BarData w1 = generateData("5月第1周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
-//		BarData w2 = generateData("5月第2周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
-//		BarData w3 = generateData("5月第3周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK));
-//		list_week = new ArrayList<BarData>();
-		LineData w1 = generateDataLine("5月第1周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(192, 255, 140));
-		LineData w2 = generateDataLine("5月第2周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(255, 247, 140));
-		LineData w3 = generateDataLine("5月第3周", 7, 100, getXLabels(XAXIS_LABEL_TYPE_WEEK), Color.rgb(192, 255, 140));
-		list_week = new ArrayList<LineData>();
-		list_week.add(w3);
-		list_week.add(w2);
-		list_week.add(w1);
-		
-//		BarData m1 = generateData("2015年5月", 31, 100, getXLabels(XAXIS_LABEL_TYPE_MONTH));
-//		list_month = new ArrayList<BarData>();
-//		list_month.add(m1);
-		LineData m1 = generateDataLine("2015年5月", 31, 100, getXLabels(XAXIS_LABEL_TYPE_MONTH), Color.rgb(192, 255, 140));
-		list_month = new ArrayList<LineData>();
-		list_month.add(m1);
-//		mAdapter = new ChartListAdapter(StatisticsFragment.this.getActivity().getApplicationContext(), list_day);
-		mAdapter = new LineChartListAdapter(StatisticsFragment.this.getActivity().getApplicationContext(), list_day);
-		mListView.setAdapter(mAdapter);
-		
-//		generateDemoData();
-//	     XAxis xAxis = bc_statistics.getXAxis();
-//         xAxis.setPosition(XAxisPosition.BOTTOM);
-//         xAxis.setDrawGridLines(false);
-//         
-//         
-//         YAxis leftAxis = bc_statistics.getAxisLeft();
-//         leftAxis.setLabelCount(5);
-//         leftAxis.setSpaceTop(15f);
-//         data = generateData("Data of Day", 24, 100, getXLabels(XAXIS_LABEL_TYPE_DAY));
-// //        bc_statistics.setData(data);
 		Log.d(LOG_TAG, "onCreateView is called");
 		return rootView;
 	}
@@ -295,8 +298,8 @@ public class StatisticsFragment extends Fragment {
 	        }
 
 	        LineDataSet dataSet = new LineDataSet(entries, label);
-	        dataSet.setLineWidth(2.5f);
-	        dataSet.setCircleSize(4.5f);
+	        dataSet.setLineWidth(10f);
+	        dataSet.setCircleSize(14f);
 	        dataSet.setCircleColor(color);
 	        dataSet.setHighLightColor(color);
 	       dataSet.setValueTextColor(Color.BLACK);

@@ -2,6 +2,7 @@ package org.demo.airdetect.main;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,7 +34,10 @@ public class StatisticPager extends FragmentActivity {
 
         // Set up the ViewPager, attaching the adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mCollectionPagerAdapter);
+        mViewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));     
+        android.support.v4.view.PagerTitleStrip strip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
+        strip.setBackgroundColor(getResources().getColor(android.R.color.holo_green_dark));
+        mViewPager.setAdapter(mCollectionPagerAdapter);   
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -44,10 +49,7 @@ public class StatisticPager extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    /**
-     * A {@link android.support.v4.app.FragmentStatePagerAdapter} that returns a fragment
-     * representing an object in the collection.
-     */
+
     public static class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     	String[] titles = {"日","周","月"};
@@ -58,7 +60,7 @@ public class StatisticPager extends FragmentActivity {
         @Override
         public Fragment getItem(int i) {
         	Bundle args = new Bundle();
-            args.putInt(StatisticsFragment.EXTRA_ARG, i); // Our object is just an integer :-P
+            args.putInt(StatisticsFragment.EXTRA_ARG, i);
             Fragment fragment = new StatisticsFragment();
             fragment.setArguments(args);
             return fragment;
@@ -66,7 +68,7 @@ public class StatisticPager extends FragmentActivity {
 
         @Override
         public int getCount() {
-            // For this contrived example, we have a 100-object collection.
+            
             return 3;
         }
 

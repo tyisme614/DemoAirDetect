@@ -77,7 +77,7 @@ public class StatisticsFragment extends android.support.v4.app.Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		rootView = null;
+	
 		if(rootView == null){
 			rootView = inflater.inflate(R.layout.fragment_statistics, container, false);
 //			btn_day = (Button) rootView.findViewById(R.id.btn_day);
@@ -248,7 +248,7 @@ public class StatisticsFragment extends android.support.v4.app.Fragment {
 //		bc_statistics.setData(data);
 //		bc_statistics.animateY(500);
 //		bc_statistics.setDescription("");
-		mAdapter.notifyDataSetInvalidated();
+		Log.d(LOG_TAG, "onResume");
 	}
 
 	@Override
@@ -336,18 +336,15 @@ public class StatisticsFragment extends android.support.v4.app.Fragment {
 	        }
 
 	        LineDataSet dataSet = new LineDataSet(entries, label);
-	        dataSet.setLineWidth(5f);
-	        dataSet.setCircleSize(6f);		        
+	        dataSet.setLineWidth(2.5f);
+	        dataSet.setCircleSize(3f);		        
 	        dataSet.setCircleColor(Color.WHITE);
 	        dataSet.setHighLightColor(Color.WHITE);
-	       dataSet.setValueTextColor(Color.WHITE);
-	   
 	        dataSet.setColor(Color.WHITE);
 	        dataSet.setDrawValues(false);
 	      
 	        ArrayList<LineDataSet> sets = new ArrayList<LineDataSet>();
-	        sets.add(dataSet);
-	       
+	        sets.add(dataSet);	       
 	        LineData cd = new LineData(xList, sets);
 	        return cd;
 	    }
@@ -464,6 +461,7 @@ public class StatisticsFragment extends android.support.v4.app.Fragment {
 	
 	class LineChartListAdapter extends ArrayAdapter<LineData>{
 		private List<LineData> dataList;
+		private List<View> views;
 		private int[] mColors = new int[] {
 				Color.rgb(255, 102, 0), 
 	            Color.rgb(240, 240, 30), 
@@ -512,44 +510,46 @@ public class StatisticsFragment extends android.support.v4.app.Fragment {
 	                        R.layout.list_item_linechart, null);               	
 					
 					holder.chart = (LineChart) convertView.findViewById(R.id.bc_statistics);	
-	                convertView.setTag(holder);
-	                // apply styling
-		            holder.chart.setDescription("");
-		            holder.chart.setDrawGridBackground(false);
-		            holder.chart.setBackgroundColor(mColors[position%4]);
-		            Legend l = holder.chart.getLegend();
-		            l.setTextSize(12f);
-		            l.setForm(LegendForm.CIRCLE);
-		            l.setFormSize(6f);
-		            l.setTextColor(Color.WHITE);	            
-		            data.setValueTextColor(Color.WHITE);
-
-		            XAxis xAxis = holder.chart.getXAxis();
-		            xAxis.setPosition(XAxisPosition.BOTTOM);	        
-		            xAxis.setDrawGridLines(false);
-		            xAxis.setTextColor(Color.WHITE);
-//		            xAxis.setAxisLineWidth(10.0f);
-		            xAxis.setTextSize(12f);
+	                convertView.setTag(holder);	               
 		            
-		            YAxis leftAxis = holder.chart.getAxisLeft();	      
-		            leftAxis.setLabelCount(5);
-		            leftAxis.setSpaceTop(15f); 
-		            leftAxis.setTextColor(Color.WHITE);
-//		            leftAxis.setAxisLineWidth(10.0f);
-		            leftAxis.setTextSize(12f);
-		            
-		            YAxis rightAxis = holder.chart.getAxisRight();
-		            rightAxis.setTextColor(Color.TRANSPARENT);
-		            // set data
-		            holder.chart.setData(data);
-		            
-		            // do not forget to refresh the chart
-//		            holder.chart.invalidate();
-		            holder.chart.animateY(700);
 	            } else {
 	                holder = (ViewHolder) convertView.getTag();
 	            }
+	            // apply styling
+	            holder.chart.setDescription("");
+	            holder.chart.setDrawGridBackground(false);
+	            holder.chart.setBackgroundColor(mColors[position%4]);
+	            Legend l = holder.chart.getLegend();
+	            l.setTextSize(12f);
+	            l.setForm(LegendForm.CIRCLE);
+	            l.setFormSize(6f);
+	            l.setTextColor(Color.WHITE);	            
+	            data.setValueTextColor(Color.WHITE);
+
+	            XAxis xAxis = holder.chart.getXAxis();
+	            xAxis.setPosition(XAxisPosition.BOTTOM);	        
+	            xAxis.setDrawGridLines(false);
+	            xAxis.setTextColor(Color.WHITE);
+//	            xAxis.setAxisLineWidth(10.0f);
+	            xAxis.setTextSize(12f);
 	            
+	            YAxis leftAxis = holder.chart.getAxisLeft();	      
+	            leftAxis.setLabelCount(5);
+	            leftAxis.setSpaceTop(15f); 
+	            leftAxis.setTextColor(Color.WHITE);
+//	            leftAxis.setAxisLineWidth(10.0f);
+	            leftAxis.setTextSize(12f);
+	            
+	            YAxis rightAxis = holder.chart.getAxisRight();
+	            rightAxis.setTextColor(Color.TRANSPARENT);
+	            
+	            
+	            // set data
+	            holder.chart.setData(data);
+	            
+	            // do not forget to refresh the chart
+//	            holder.chart.invalidate();
+	            holder.chart.animateX(700);
 	          
 	            
 			return convertView;

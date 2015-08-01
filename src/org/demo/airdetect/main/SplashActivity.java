@@ -1,5 +1,7 @@
 package org.demo.airdetect.main;
 
+import com.github.mikephil.charting.utils.Utils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +20,9 @@ public class SplashActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.splash);
-		
-		mHandler.sendEmptyMessageDelayed(0, 3000);
+		 // initialize the utilities
+        Utils.init(getResources());
+		mHandler.sendEmptyMessageDelayed(0, 1500);
 	}
 	
 	Handler mHandler = new Handler(){

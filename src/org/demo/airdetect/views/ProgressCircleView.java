@@ -42,10 +42,11 @@ public class ProgressCircleView extends View {
 	private int mTotalProgress = 100;
 	// 当前进度
 	private int mProgress;
-	
+	private Context cxt;
 	public ProgressCircleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// 获取自定义的属性
+		cxt = context;
 		initAttrs(context, attrs);
 		initVariable();
 	}
@@ -67,11 +68,13 @@ public class ProgressCircleView extends View {
 		mCirclePaint.setColor(mCircleColor);
 		mCirclePaint.setStyle(Paint.Style.FILL);
 		
+		
 		mRingPaint = new Paint();
 		mRingPaint.setAntiAlias(true);
 		mRingPaint.setColor(mRingColor);
 		mRingPaint.setStyle(Paint.Style.STROKE);
 		mRingPaint.setStrokeWidth(mStrokeWidth);
+		
 		
 		mTextPaint = new Paint();
 		mTextPaint.setAntiAlias(true);
@@ -103,6 +106,10 @@ public class ProgressCircleView extends View {
 			String txt = String.valueOf(mProgress);// + "%";
 			mTxtWidth = mTextPaint.measureText(txt, 0, txt.length());
 			canvas.drawText(txt, mXCenter - mTxtWidth / 2, mYCenter + mTxtHeight / 4, mTextPaint);
+		}else if (mProgress < 0){
+			String txt = "--";
+			mTxtWidth = mTextPaint.measureText(txt, 0, txt.length());
+			canvas.drawText(txt, mXCenter - mTxtWidth / 2, mYCenter + mTxtHeight / 4, mTextPaint);
 		}
 	}
 	
@@ -115,7 +122,7 @@ public class ProgressCircleView extends View {
 	public void setColor(int circle, int ring, int text){
 //		mCirclePaint.setColor(circle);
 		mRingPaint.setColor(ring);
-		mTextPaint.setColor(text);
+//		mTextPaint.setColor(text);
 	}
 
 }

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_bg"
      >
+     <!-- 
     <LinearLayout android:id="@+id/ll_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,18 +39,19 @@
             />
         
     </LinearLayout>
+    
+     -->
 	<!-- <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bc_statistics"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-         />  -->
+         />  -->  
          <ListView android:id="@+id/lv_charts"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-           android:layout_below="@id/ll_1"
-             android:layout_marginTop="20dp"       
-             android:dividerHeight="20dp"
+             android:layout_height="match_parent"          
+             android:layout_marginTop="0dp"       
+             android:dividerHeight="0dp"
              ></ListView>
-       
+        <!--  -android:layout_below="@id/ll_1"--> 
 </RelativeLayout>

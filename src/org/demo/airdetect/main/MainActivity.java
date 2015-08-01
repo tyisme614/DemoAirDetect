@@ -27,7 +27,7 @@ public class MainActivity extends Activity
 	//constants
 	private static final int FRAGMENT_INDEX = 0;
 	private static final int FRAGMENT_STATISTICS = 1;
-	private static final int FRAGMENT_PROFILE = 2;
+	private static final int FRAGMENT_PROFILE = 1;
 	public static final String EXTRA_DEVICE_NAME = "extra.device_name";
 	public static final String EXTRA_DEVICE_ID = "extra.device_id";
 	public static final String EXTRA_DEVICE_IP = "extra.device_ip";
@@ -68,9 +68,9 @@ public class MainActivity extends Activity
     		int value = (int) (Math.random()*100.0);
     		target = IndexFragment.getInstance(value);
     		break;
-    	case FRAGMENT_STATISTICS:
-    		target = StatisticsFragment.getInstance();
-    		break;
+//    	case FRAGMENT_STATISTICS:
+//    		target = StatisticsFragment.getInstance();
+//    		break;
     	case FRAGMENT_PROFILE:
     		target = ProfileFragment.getInstance();
     		break;
@@ -90,10 +90,10 @@ public class MainActivity extends Activity
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
+//            case 2:
+//                mTitle = getString(R.string.title_section2);
+//                break;
             case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
         }

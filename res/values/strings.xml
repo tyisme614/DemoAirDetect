@@ -17,6 +17,21 @@
     <string name="devicelist_title">设备列表</string>
     <!-- device scan -->
     <string name="devicescan_title">设备搜索</string>
+    <!--  index fagment -->  
+    <string name="str_progress_detecting">检测中...</string>  
+    <string name="str_title_reference">数值参考</string>  
+    <string name="str_perfect">优</string>
+    <string name="str_good">良好</string>
+    <string name="str_normal">一般</string>
+    <string name="str_bad">差</string>
+    <string name="str_dangerous">重污染</string>
+    <string name="str_novalue">未检测</string>
+    <string name="str_perfect_range">0~20</string>
+    <string name="str_good_range">20~40</string>
+    <string name="str_normal_range">40~60</string>
+    <string name="str_bad_range">60~80</string>
+    <string name="str_dangerous_range">80~99</string>
+    
     <!-- statics fragment -->
     <string name="btn_day">日</string>
     <string name="btn_month">月</string>

@@ -119,18 +119,18 @@ public class NavigationDrawerFragment extends Fragment {
 //                }));
         
         Drawable d_index = getResources().getDrawable(R.drawable.icon_index);
-        Drawable d_trend = getResources().getDrawable(R.drawable.icon_trend);
+//        Drawable d_trend = getResources().getDrawable(R.drawable.icon_trend);
         Drawable d_info =   getResources().getDrawable(R.drawable.icon_info);
         String str_index = getString(R.string.title_section1);
-        String str_trend = getString(R.string.title_section2);
+//        String str_trend = getString(R.string.title_section2);
         String str_info = getString(R.string.title_section3);
         Map<String, Drawable> src = new HashMap<String, Drawable>();
         src.put(str_index, d_index);
-        src.put(str_trend, d_trend);
+ //       src.put(str_trend, d_trend);
         src.put(str_info, d_info);
         List<String> texts = new ArrayList<String>();
         texts.add(str_index);
-        texts.add(str_trend);
+ //       texts.add(str_trend);
         texts.add(str_info);
         mDrawerListView.setAdapter(new DrawerAdapter(getActivity(), src, texts));
         

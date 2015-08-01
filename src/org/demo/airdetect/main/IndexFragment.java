@@ -2,7 +2,10 @@ package org.demo.airdetect.main;
 
 import org.demo.airdetect.views.ProgressCircleView;
 
+import com.pnikosis.materialishprogress.ProgressWheel;
+
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,8 +13,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
@@ -34,7 +39,9 @@ public class IndexFragment extends Fragment {
 	private int mCurrentIndex;
 	//widgets
 	private ProgressCircleView pcv_index;
-	private HorizontalScrollView hsv_tips;
+	private ProgressWheel pw_search;
+	private ImageButton ib_history;
+//	private HorizontalScrollView hsv_tips;
 	private TextView tv_state;
 	private boolean started = false;
 	private int curr_state;
@@ -60,28 +67,39 @@ public class IndexFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.fragment_index, container, false);
 		pcv_index = (ProgressCircleView) rootView.findViewById(R.id.pcv_index);
-		hsv_tips = (HorizontalScrollView) rootView.findViewById(R.id.hsv_tips);
+		pw_search = (ProgressWheel) rootView.findViewById(R.id.pw_search);
+		ib_history = (ImageButton) rootView.findViewById(R.id.ib_history);
+		ib_history.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(getActivity(), StatisticPager.class);
+				startActivity(i);
+			}
+		});
+//		hsv_tips = (HorizontalScrollView) rootView.findViewById(R.id.hsv_tips);
 		
 		//for demo purpose
-		LayoutInflater li = this.getActivity().getLayoutInflater();
-		LinearLayout ll_container = new LinearLayout(this.getActivity());
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-		ll_container.setOrientation(LinearLayout.HORIZONTAL);
+//		LayoutInflater li = this.getActivity().getLayoutInflater();
+//		LinearLayout ll_container = new LinearLayout(this.getActivity());
+//		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+//		ll_container.setOrientation(LinearLayout.HORIZONTAL);
+//		
+//		ll_container.setLayoutParams(params);
+//		ll_container.setGravity(Gravity.CENTER);
 		
-		ll_container.setLayoutParams(params);
-		ll_container.setGravity(Gravity.CENTER);
-		
-		View v1 = li.inflate(R.layout.gallery_item_smallpic, null);		
-		TextView msg = (TextView) v1.findViewById(R.id.tv_msg);
-		msg.setText(this.getActivity().getString(R.string.tip_msg));
-		View v2 = li.inflate(R.layout.gallery_item_pic,null);
-		View v3 = li.inflate(R.layout.gallery_item_smallpic, null);				
-		View v4 = li.inflate(R.layout.gallery_item_pic,null);
-		ll_container.addView(v1);
-		ll_container.addView(v2);
-		ll_container.addView(v3);
-		ll_container.addView(v4);
-		hsv_tips.addView(ll_container);
+//		View v1 = li.inflate(R.layout.gallery_item_smallpic, null);		
+//		TextView msg = (TextView) v1.findViewById(R.id.tv_msg);
+//		msg.setText(this.getActivity().getString(R.string.tip_msg));
+//		View v2 = li.inflate(R.layout.gallery_item_pic,null);
+//		View v3 = li.inflate(R.layout.gallery_item_smallpic, null);				
+//		View v4 = li.inflate(R.layout.gallery_item_pic,null);
+//		ll_container.addView(v1);
+//		ll_container.addView(v2);
+//		ll_container.addView(v3);
+//		ll_container.addView(v4);
+//		hsv_tips.addView(ll_container);
 		
 		tv_state = (TextView) rootView.findViewById(R.id.tv_state);
 		
@@ -94,21 +112,25 @@ public class IndexFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 //		mCurrentIndex = getArguments().getInt(KEY_CURRENT_INDEX);
+		pw_search.setVisibility(View.VISIBLE);
+		
 		pcv_index.clearAnimation();
 		pcv_index.clearFocus();
 		pcv_index.destroyDrawingCache();
 		
-		tv_state.setText("优");
+		tv_state.setText(R.string.str_progress_detecting);
 		tv_state.setTextColor(getResources().getColor(R.color.green));
+		pcv_index.setProgress(-1);
 		curr_state = STATE_EXCELLENT;
-		pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green), getResources().getColor(R.color.green));
+		pcv_index.setColor(getResources().getColor(R.color.green), getResources().getColor(R.color.green), getResources().getColor(R.color.green));		
 		mCurrentIndex = (int) (Math.random()*100.0);
+		mHandler.sendEmptyMessageDelayed(0, 3000);
 		if(update != null ){
 			started = false;
 			update.interrupt();
 			update = null;
 		}
-		start();
+//		start();
 		super.onResume();
 	}
 
@@ -129,6 +151,9 @@ public class IndexFragment extends Fragment {
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
+			if( !isAdded() ){
+				return;
+			}
 			switch( msg.arg1 ){
 			case STATE_EXCELLENT:
 				tv_state.setText("优");
@@ -146,9 +171,16 @@ public class IndexFragment extends Fragment {
 			pcv_index.setColor(getResources().getColor(R.color.orange), getResources().getColor(R.color.orange), getResources().getColor(R.color.orange));
 			break;
 			case STATE_DANGER:
-				tv_state.setText("极差");
+			tv_state.setText("极差");
 				tv_state.setTextColor(getResources().getColor(R.color.red));
 				pcv_index.setColor(getResources().getColor(R.color.red), getResources().getColor(R.color.red), getResources().getColor(R.color.red));
+				break;
+			case 0:
+				pw_search.setVisibility(View.GONE);
+				
+				start();
+				
+				
 				break;
 			}
 //			pcv_index.setProgress(msg.arg2);
@@ -189,7 +221,7 @@ public class IndexFragment extends Fragment {
 					}else if( index >=75 ){
 						state = STATE_DANGER;
 					}
-					if( curr_state != state ){
+					if( true){//curr_state != state ){
 						curr_state = state;
 						Message msg = mHandler.obtainMessage(MSG_UPDATE_STATE, curr_state, index);
 						msg.sendToTarget();
